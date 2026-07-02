@@ -1,9 +1,5 @@
 # BBRecon
 
-<p align="center">
-  <img src="Screenshot%202026-07-02%20163726.png" alt="BBRecon CLI" width="700">
-</p>
-
 # Professional Bug Bounty Toolkit v5.1.0
 
 BBRecon is an automated reconnaissance and OSINT framework for bug bounty hunting and penetration testing. It performs end-to-end asset discovery, fingerprinting, vulnerability checks, OSINT enrichment, and report generation.
