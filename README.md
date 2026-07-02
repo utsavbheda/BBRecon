@@ -1,63 +1,54 @@
+
 # BBRecon
 
-# Professional Bug Bounty Toolkit v5.1.0
+> **Professional Bug Bounty Toolkit v5.1.0**
 
-BBRecon is an automated reconnaissance and OSINT framework for bug bounty hunting and penetration testing. It performs end-to-end asset discovery, fingerprinting, vulnerability checks, OSINT enrichment, and report generation.
+BBRecon is an asynchronous reconnaissance and OSINT framework built for Bug Bounty Hunters, Penetration Testers, and Security Researchers. It automates asset discovery, fingerprinting, vulnerability detection, OSINT enrichment, and report generation.
 
-> **Version:** v5.1.0
+---
 
-## CLI Preview
+# Features
 
-> If the screenshot is stored alongside this README, GitHub will render it automatically.
-
-![BBRecon CLI](Screenshot%202026-07-02%20163726.png)
-
-## Features
-
-### Asset Discovery
-
-- Passive Subdomain Enumeration
-- Active Subdomain Enumeration
+## Asset Discovery
+- Passive & Active Subdomain Enumeration
 - Live Host Detection
 - DNS Enumeration
-- Reverse DNS Lookup
-- ASN / WHOIS Lookup
-- SSL Certificate Collection
-- Port Scanning
+- Reverse DNS / WHOIS / ASN Lookup
 - HTTP Fingerprinting
+- Port Scanning
+- SSL Certificate Analysis
 - Technology Detection
 - JavaScript Endpoint Discovery
 
-### Vulnerability Detection
-
-- Subdomain Takeover
+## Vulnerability Detection
+- Subdomain Takeover Detection
 - CORS Misconfiguration
-- Open Redirect
+- Open Redirect Detection
 - Git Repository Exposure
 - Environment File Exposure
+- DNS Health Analysis
 - Security Header Analysis
 - SSL Expiry Detection
 
-### OSINT
-
+## OSINT
+- 20 Integrated Async OSINT Modules
 - Certificate Transparency
 - DNSSEC Validation
-- Zone Transfer Detection
 - SPF / DKIM / DMARC Validation
-- security.txt Detection
 - Firewall Detection
 - Domain Reputation
-- Cookie Analysis
+- security.txt Detection
 - Typosquat Detection
 
-### Reporting
-
+## Reporting
 - SQLite Database
 - JSON Export
 - CSV Export
 - Markdown Reports
 
-## Recon Pipeline
+---
+
+# 12-Phase Reconnaissance Pipeline
 
 1. Target Initialization
 2. Passive Enumeration
@@ -72,20 +63,118 @@ BBRecon is an automated reconnaissance and OSINT framework for bug bounty huntin
 11. OSINT Posture Assessment
 12. Report Generation
 
-## Example Usage
+---
+
+# Installation
+
+## Supported Platforms
+
+- Kali Linux (Recommended)
+- Ubuntu 22.04+
+- Debian 12+
+- Parrot OS
+- macOS (limited external tool support)
+
+---
+
+## Clone Repository
+
+```bash
+git clone https://github.com/utsavbheda/BBRecon.git
+cd BBRecon
+```
+
+---
+
+## Python Requirements
+
+Python 3.11 or newer is recommended.
+
+Create a virtual environment:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+Install Python dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## Kali Linux Dependencies
+
+```bash
+sudo apt update
+
+sudo apt install -y \
+python3 python3-pip python3-venv \
+git curl jq sqlite3 nmap whois dnsutils \
+amass assetfinder subfinder httpx gau katana \
+nuclei wafw00f
+```
+
+Optional tools (recommended if available):
+
+- massdns
+- dnsx
+- naabu
+- ffuf
+
+Update Nuclei templates:
+
+```bash
+nuclei -update-templates
+```
+
+---
+
+## Verify Installation
+
+```bash
+python3 bbrecon_03072026.py tools
+```
+
+This command checks whether supported external tools are installed and available.
+
+---
+
+# Usage
 
 ```bash
 python3 bbrecon_03072026.py scan example.com
+
 python3 bbrecon_03072026.py scan https://example.com
+
 python3 bbrecon_03072026.py scan example.com --skip-xss --skip-sqli
+
 python3 bbrecon_03072026.py scan example.com --stealth --diff-only
+
 python3 bbrecon_03072026.py tools
+
 python3 bbrecon_03072026.py config show
 ```
 
-## Database
+---
 
-Core tables include:
+# Output
+
+BBRecon generates:
+
+- SQLite Database
+- JSON Report
+- CSV Report
+- Markdown Report
+- Log Files
+
+---
+
+# Database
+
+Main tables include:
 
 - targets
 - subdomains
@@ -101,26 +190,29 @@ Core tables include:
 - git_exposure_findings
 - env_file_findings
 - dns_health
-- whois
-- certificate_transparency
-- reputation
-- firewall_detection
+- osint_results
 
-## Requirements
+---
 
-- Python 3.11+
-- aiohttp
-- aiosqlite
-- dnspython
-- python-Wappalyzer
-
-## Roadmap
+# Roadmap
 
 - HTML Dashboard
 - Docker Support
 - REST API
 - Plugin SDK
+- Distributed Scanning
 - Shodan Integration
 - Censys Integration
 - Screenshot Engine
-- Notification System
+
+---
+
+# Disclaimer
+
+Use BBRecon only on systems that you own or are explicitly authorized to test.
+
+---
+
+# License
+
+Add your preferred open-source license (MIT or Apache-2.0 recommended).
