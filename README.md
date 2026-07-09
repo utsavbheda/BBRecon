@@ -10,27 +10,19 @@ BBRecon is an asynchronous reconnaissance and OSINT framework built for Bug Boun
 # Features
 
 ## Asset Discovery
-- Passive & Active Subdomain Enumeration
-- Live Host Detection
-- DNS Enumeration
-- Reverse DNS / WHOIS / ASN Lookup
-- HTTP Fingerprinting
-- Port Scanning
-- SSL Certificate Analysis
-- Technology Detection
-- JavaScript Endpoint Discovery
+- Passive subdomain enumeration (subfinder, amass, assetfinder — run concurrently)
+- DNS brute-force via massdns (falls back to a built-in wordlist if seclists isn't installed)
+- Live host probing with Wappalyzer technology fingerprinting
+- URL discovery (waybackurls, gau, katana)
+- Port scanning (naabu) + Nmap deep scan on discovered ports
 
 ## Vulnerability Detection
-- Subdomain Takeover Detection
-- CORS Misconfiguration
-- Open Redirect Detection
-- Git Repository Exposure
-- Environment File Exposure
-- DNS Health Analysis
-- Security Header Analysis
-- SSL Expiry Detection
+- Tech-aware Nuclei scanning per live host (template tags selected from fingerprinted stack)
+- Marker-based reflected XSS (concurrent, evidence files saved per finding)
+- Error-based SQL injection
+- Regex-based secrets scanning (AWS/Google/GitHub/Slack keys, JWTs, Stripe/Twilio tokens, private keys)
 
-## OSINT
+## OSINT (--skip-osint to disable)
 - 20 Integrated Async OSINT Modules
 - Certificate Transparency
 - DNSSEC Validation
@@ -41,10 +33,10 @@ BBRecon is an asynchronous reconnaissance and OSINT framework built for Bug Boun
 - Typosquat Detection
 
 ## Reporting
-- SQLite Database
-- JSON Export
-- CSV Export
-- Markdown Reports
+- Scan history stored in SQLite — each scan diffs against the previous one for the same domain (--diff-only)
+- Self-contained HTML report (report.html)
+- Per-scan state.json snapshot
+- Raw txt outputs (subdomains, live hosts, URLs, ports, findings)
 
 ---
 
@@ -88,13 +80,15 @@ cd BBRecon
 
 ## Python Requirements
 
-Python 3.11 or newer is recommended.
+Python 3.10 or newer is recommended.
 
 Create a virtual environment:
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
+pip install --upgrade pip
+pip install aiohttp>=3.8.0 aiosqlite>=0.17.0 python-Wappalyzer>=0.3.1 dnspython>=2.4.0
 ```
 
 Install Python dependencies:
@@ -135,27 +129,64 @@ nuclei -update-templates
 ## Verify Installation
 
 ```bash
-python3 bbrecon_03072026.py tools
+python3 BBRecon.py tools
 ```
 
 This command checks whether supported external tools are installed and available.
 
 ---
+## Go-based recon tools
+
+```bash
+go install github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
+go install github.com/tomnomnom/assetfinder@latest
+go install github.com/owasp-amass/amass/v4/...@master
+go install github.com/tomnomnom/waybackurls@latest
+go install github.com/lc/gau/v2/cmd/gau@latest
+go install github.com/projectdiscovery/katana/cmd/katana@latest
+go install github.com/projectdiscovery/naabu/v2/cmd/naabu@latest
+go install github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest
+go install github.com/projectdiscovery/httpx/cmd/httpx@latest
+
+echo 'export PATH=$PATH:$HOME/go/bin' >> ~/.zshrc   # or ~/.bashrc
+source ~/.zshrc
+```
+---
 
 # Usage
 
 ```bash
-python3 bbrecon_03072026.py scan example.com
+# Basic scan (bare domain or full URL both work — scheme/path auto-stripped)
+python3 BBRecon.py scan example.com
+python3 BBRecon.py scan https://example.com
 
-python3 bbrecon_03072026.py scan https://example.com
+# Skip specific scanners
+python3 BBRecon.py scan example.com --skip-xss --skip-sqli --skip-secrets
 
-python3 bbrecon_03072026.py scan example.com --skip-xss --skip-sqli
+# Skip the 6 OSINT-derived posture checks (takeover, CORS, open redirect, git/env exposure, DNS health)
+python3 BBRecon.py scan example.com --skip-osint
 
-python3 bbrecon_03072026.py scan example.com --stealth --diff-only
+# No nuclei (fastest scan)
+python3 BBRecon.py scan example.com --no-nuclei
 
-python3 bbrecon_03072026.py tools
+# Stealth mode (slower, T2 nmap timing, lower request rate)
+python3 BBRecon.py scan example.com --stealth
 
-python3 bbrecon_03072026.py config show
+# Show diff vs previous scan of this domain (full scan still runs)
+python3 BBRecon.py scan example.com --diff-only
+
+# Custom output directory
+python3 BBRecon.py scan example.com --output ./my_results
+
+# Debug logging (every liveness/probe/DNS failure logged)
+BBRECON_DEBUG=1 python3 BBRecon.py scan example.com
+
+# Check external tool availability
+python3 BBRecon.py tools
+
+# View / initialize config
+python3 BBRecon.py config show
+python3 BBRecon.py config init
 ```
 
 ---
@@ -209,10 +240,10 @@ Main tables include:
 
 # Disclaimer
 
-Use BBRecon only on systems that you own or are explicitly authorized to test.
+Use BBRecon only against systems you own or are explicitly authorized to test. The authors and contributors are not responsible for misuse.
 
 ---
 
 # License
 
-Add your preferred open-source license (MIT or Apache-2.0 recommended).
+Add your preferred open-source license (MIT or Apache-2.0 recommended) — not yet specified in this repository.
