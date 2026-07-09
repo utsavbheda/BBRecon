@@ -1,0 +1,4 @@
+aiohttp>=3.10.0
+aiosqlite>=0.20.0
+dnspython>=2.7.0
+python-Wappalyzer>=0.3.1
