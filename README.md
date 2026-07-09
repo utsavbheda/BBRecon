@@ -246,4 +246,4 @@ Use BBRecon only against systems you own or are explicitly authorized to test. T
 
 # License
 
-Add your preferred open-source license (MIT or Apache-2.0 recommended) — not yet specified in this repository.
+This project is licensed under the MIT License. See the `LICENSE` file for details.
