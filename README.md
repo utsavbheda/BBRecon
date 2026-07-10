@@ -3,6 +3,8 @@
 
 > **Professional Bug Bounty Toolkit v5.1.0**
 
+![BBRecon Dashboard](screenshots/BBRecon_Dashboard.png)
+
 BBRecon is an asynchronous reconnaissance and OSINT framework built for Bug Bounty Hunters, Penetration Testers, and Security Researchers. It automates asset discovery, fingerprinting, vulnerability detection, OSINT enrichment, and report generation.
 
 ---
@@ -15,6 +17,10 @@ BBRecon is an asynchronous reconnaissance and OSINT framework built for Bug Boun
 - Live host probing with Wappalyzer technology fingerprinting
 - URL discovery (waybackurls, gau, katana)
 - Port scanning (naabu) + Nmap deep scan on discovered ports
+
+![URL_Discovery](screenshots/URL_Discovery.png)
+
+![Subdomain Ennumeration](screenshots/Subdomain_Ennumeration.png)
 
 ## Vulnerability Detection
 - Tech-aware Nuclei scanning per live host (template tags selected from fingerprinted stack)
