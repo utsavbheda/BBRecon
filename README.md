@@ -1,7 +1,7 @@
 
 # BBRecon
 
-> **Professional Bug Bounty Toolkit v5.1.0**
+> **Professional Bug Bounty Toolkit v1.0.0**
 
 ![BBRecon Dashboard](Screenshots/BBRecon_Dashboard.png)
 
@@ -20,7 +20,7 @@ BBRecon is an asynchronous reconnaissance and OSINT framework built for Bug Boun
 
 ![URL_Discovery](Screenshots/URL_Discovery.png)
 
-![Subdomain Ennumeration](Screenshots/Subdomain_Ennumeration.png)
+![Subdomain Enumeration](Screenshots/Subdomain_Ennumeration.png)
 
 ## Vulnerability Detection
 - Tech-aware Nuclei scanning per live host (template tags selected from fingerprinted stack)
