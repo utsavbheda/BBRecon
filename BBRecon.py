@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 BBRecon - Professional Bug Bounty Toolkit
-Version: 5.1.0
+Version: 1.0.0
 Date: 2026-06-09
 
 Pair 5 additions vs 5.0.0 (bbrecon_06062026.py):
@@ -111,7 +111,7 @@ log = logging.getLogger(__name__)
 # ============================================================
 # CONSTANTS
 # ============================================================
-VERSION       = "5.1.0"
+VERSION       = "1.0.0"
 APP_NAME      = "BBRecon"
 CONFIG_DIR    = Path.home() / ".bbrecon"
 CONFIG_FILE   = CONFIG_DIR / "config.json"
